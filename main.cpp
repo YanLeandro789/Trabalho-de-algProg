@@ -250,6 +250,7 @@ void carregarBinario(Artigo*& head) {
         novo->next = head;
         head = novo;
     }
+    //a
 
     arquivo.close();
     cout << "Acervo carregado com sucesso!\n";
