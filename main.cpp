@@ -309,5 +309,38 @@ int main() {
 
     } while (opcao != 6);
 
+    int escolha; // variavel para celeção que vai usar
+    while (escolha != 6) 
+    {
+        cout << "1. Adicionar Artigo" << endl;
+        cout << "2. Buscar Artigo" << endl;
+        cout << "3. Atualizar Citações" << endl;
+        cout << "4. Gerar Relatório por Ano" << endl;
+        cout << "5. Exibir Estatísticas de Citações" << endl;
+        cout << "6. Sair" << endl;
+        cout << "Escolha uma opção: ";
+        cin >> escolha;
+        if (escolha == 1) {
+            // Adicionar Artigo
+    }
+        else if (escolha == 2) {
+            // Buscar Artigo
+        }
+        else if (escolha == 3) {
+            // Atualizar Citações
+        }
+        else if (escolha == 4) {
+            // Gerar Relatório por Ano
+        }
+        else if (escolha == 5) {
+            // Exibir Estatísticas de Citações
+        }
+        else if (escolha == 6) {
+            // Sair (Salvar em binário ".dat" e liberar memória)
+        }
+        else {
+            cout << "Opção inválida. Tente novamente." << endl;
+        }
+
     return 0;
 }
