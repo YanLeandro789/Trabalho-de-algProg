@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
- 
+//YAN VIADO
 using namespace std;
 
 //add Artigo (Alocação Dinâmica)
