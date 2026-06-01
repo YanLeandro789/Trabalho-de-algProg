@@ -9,24 +9,14 @@ struct Artigo {
     int  anoPB;
     int  DOI;
     int  citacoes;
-
     Artigo* next;
 };
 
-//  copia string
-
-void copiarStr(char* dest, const char* orig, int tamanho) {
-    int i = 0;
-    for (i = 0; i < tamanho - 1 && orig[i] != '\0'; i++)
-        dest[i] = orig[i];
-    dest[i] = '\0';
-}
-
-
+// Novo artigo
 void insertArtigo(Artigo*& head) {
     Artigo* novo = new Artigo();
 
-    cout << "\n--- Inserir Novo Artigo ---\n";
+    cout << "Inserir Novo Artigo\n";
 
     cout << "Titulo: ";
     cin.ignore();
@@ -53,21 +43,21 @@ void insertArtigo(Artigo*& head) {
 
 
 Artigo* buscarPorDOI(Artigo* head, int doi) {
-    // caso base: lista vazia ou chegou ao fim
+    //caso base
     if (head == nullptr)
         return nullptr;
 
-    // encontrou
     if (head->DOI == doi)
         return head;
 
-    // chamada recursiva pro próximo nó
     return buscarPorDOI(head->next, doi);
 }
 
+
+
 void menuBuscar(Artigo* head) {
     int doi;
-    cout << "\n--- Buscar Artigo por DOI ---\n";
+    cout << "Buscar Artigo por DOI\n";
     cout << "Digite o DOI: ";
     cin >> doi;
 
@@ -76,7 +66,7 @@ void menuBuscar(Artigo* head) {
     if (encontrado == nullptr) {
         cout << "Artigo nao encontrado.\n";
     } else {
-        cout << "\n=== Artigo Encontrado ===\n";
+        cout << "Artigo Encontrado\n";
         cout << "Titulo   : " << encontrado->titulo   << "\n";
         cout << "Autor    : " << encontrado->autor    << "\n";
         cout << "Ano      : " << encontrado->anoPB    << "\n";
@@ -86,15 +76,16 @@ void menuBuscar(Artigo* head) {
 }
 
 
-// atualizar (Passagem por Referência)
+// atualizar citaçoes
 
 void atualizarCitacoes(int& citacoes, int incremento) {
     citacoes += incremento;
 }
 
+
 void menuAtualizarCitacoes(Artigo* head) {
     int doi, incremento;
-    cout << "\n--- Atualizar Citacoes ---\n";
+    cout << "Atualizar Citacoes\n";
     cout << "Digite o DOI do artigo: ";
     cin >> doi;
 
@@ -109,17 +100,15 @@ void menuAtualizarCitacoes(Artigo* head) {
     cout << "Quantas citacoes deseja adicionar? ";
     cin >> incremento;
 
-    atualizarCitacoes(art->citacoes, incremento);  // passagem por referência
+    atualizarCitacoes(art->citacoes, incremento);  
 
     cout << "Citacoes atualizadas para: " << art->citacoes << "\n";
 }
 
-// 4. GERAR RELATÓRIO POR ANO (Arquivo de Texto)
-
-
+//gerar relatorio por ano
 void gerarRelatorio(Artigo* head) {
     int anoInicio, anoFim;
-    cout << "\n--- Gerar Relatorio por Ano ---\n";
+    cout << "Gerar Relatorio por Ano";
     cout << "Ano inicial: ";
     cin >> anoInicio;
     cout << "Ano final  : ";
@@ -132,7 +121,7 @@ void gerarRelatorio(Artigo* head) {
         return;
     }
 
-    arquivo << "=== Relatorio de Artigos (" << anoInicio << " - " << anoFim << ") ===\n\n";
+    arquivo << "Relatorio de Artigos (" << anoInicio << " - " << anoFim << ")\n\n";
 
     Artigo* atual = head;
     int count = 0;
@@ -153,23 +142,23 @@ void gerarRelatorio(Artigo* head) {
     arquivo << "\nTotal de artigos no periodo: " << count << "\n";
     arquivo.close();
 
-    cout << "Relatorio gerado em 'relatorio.txt' com " << count << " artigo(s).\n";
+    cout << "Relatorio gerado em 'relatorio.txt' com " << count << " artigos.\n";
 }
 
 
-// exibir (Recursivo)
-
+// exibir Recursivo
 int totalCitacoesRecursivo(Artigo* head) {
     // caso base
     if (head == nullptr)
         return 0;
 
-    // soma as citações do nó atual + recursão no restante
     return head->citacoes + totalCitacoesRecursivo(head->next);
 }
 
+
+
 void exibirEstatisticas(Artigo* head) {
-    cout << "\n--- Estatisticas de Citacoes ---\n";
+    cout << "Estatisticas de Citacoes\n";
 
     if (head == nullptr) {
         cout << "Acervo vazio.\n";
@@ -178,7 +167,6 @@ void exibirEstatisticas(Artigo* head) {
 
     int total = totalCitacoesRecursivo(head);
 
-    // conta artigos e acha o mais citado
     int count = 0;
     int maxCit = -1;
     char maisCtado[100];
@@ -200,10 +188,7 @@ void exibirEstatisticas(Artigo* head) {
     cout << "Artigo mais citado: " << maisCtado     << " (" << maxCit << " citacoes)\n";
 }
 
-// =============================================================
-// 6. SALVAR / CARREGAR BINÁRIO
-// =============================================================
-
+//salvar e carregar binario
 void salvarBinario(Artigo* head) {
     ofstream arquivo("acervo.dat", ios::binary);
 
@@ -214,31 +199,29 @@ void salvarBinario(Artigo* head) {
 
     Artigo* atual = head;
     while (atual != nullptr) {
-        // salva apenas os dados, sem o ponteiro next
         arquivo.write(reinterpret_cast<char*>(atual), sizeof(Artigo) - sizeof(Artigo*));
         atual = atual->next;
     }
 
     arquivo.close();
-    cout << "Acervo salvo em 'acervo.dat'.\n";
+    cout << "Acervo salvo\n";
 }
+
+
 
 void carregarBinario(Artigo*& head) {
     ifstream arquivo("acervo.dat", ios::binary);
 
     if (!arquivo.is_open()) {
-        // arquivo ainda não existe, tudo bem
         return;
     }
 
-    // buffer temporário com o tamanho dos dados (sem o ponteiro)
     int tamDados = sizeof(Artigo) - sizeof(Artigo*);
     char buffer[sizeof(Artigo)];
 
     while (arquivo.read(buffer, tamDados)) {
         Artigo* novo = new Artigo();
 
-        // copia os campos lidos para o novo nó
         for (int i = 0; i < 100; i++) novo->titulo[i] = buffer[i];
         for (int i = 0; i < 50;  i++) novo->autor[i]  = buffer[100 + i];
 
@@ -256,10 +239,7 @@ void carregarBinario(Artigo*& head) {
     cout << "Acervo carregado com sucesso!\n";
 }
 
-// =============================================================
-// LIBERAR MEMÓRIA
-// =============================================================
-
+// Liberar memoria
 void liberarMemoria(Artigo*& head) {
     while (head != nullptr) {
         Artigo* temp = head;
@@ -268,80 +248,45 @@ void liberarMemoria(Artigo*& head) {
     }
 }
 
-// =============================================================
-// MENU PRINCIPAL
-// =============================================================
 
 int main() {
     Artigo* head = nullptr;
 
-    // carrega acervo salvo anteriormente
     carregarBinario(head);
 
     int opcao;
 
-    do {
-        cout << "\n=============================\n";
-        cout << "  SGAC - Acervo Cientifico   \n";
-        cout << "=============================\n";
+    while(opcao != 6){
         cout << "1. Inserir Novo Artigo\n";
         cout << "2. Buscar Artigo por DOI\n";
         cout << "3. Atualizar Citacoes\n";
         cout << "4. Gerar Relatorio por Ano\n";
         cout << "5. Exibir Estatisticas de Citacoes\n";
         cout << "6. Sair\n";
-        cout << "Opcao: ";
+        cout << ">>> ";
         cin >> opcao;
-
-        switch (opcao) {
-            case 1: insertArtigo(head);            break;
-            case 2: menuBuscar(head);              break;
-            case 3: menuAtualizarCitacoes(head);   break;
-            case 4: gerarRelatorio(head);          break;
-            case 5: exibirEstatisticas(head);      break;
-            case 6:
-                salvarBinario(head);
-                liberarMemoria(head);
-                cout << "Memoria liberada. Encerrando...\n";
-                break;
-            default:
-                cout << "Opcao invalida!\n";
+        
+        if (opcao == 1 ){
+            insertArtigo(head);
+        }else if(opcao == 2){
+            menuBuscar(head);  
+        }else if(opcao == 3){
+            menuAtualizarCitacoes(head);   
+        }else if(opcao == 4){
+            gerarRelatorio(head);  
+        }else if(opcao == 5){
+           exibirEstatisticas(head);   
+        }else if(opcao == 6){
+            salvarBinario(head);
+            liberarMemoria(head);
+            cout << "Memoria liberada.\n";
+        }else{
+           cout << "Opcao invalida!\n";
         }
 
-    } while (opcao != 6);
 
-    int escolha; // variavel para celeção que vai usar
-    while (escolha != 6) 
-    {
-        cout << "1. Adicionar Artigo" << endl;
-        cout << "2. Buscar Artigo" << endl;
-        cout << "3. Atualizar Citações" << endl;
-        cout << "4. Gerar Relatório por Ano" << endl;
-        cout << "5. Exibir Estatísticas de Citações" << endl;
-        cout << "6. Sair" << endl;
-        cout << "Escolha uma opção: ";
-        cin >> escolha;
-        if (escolha == 1) {
-            // Adicionar Artigo
     }
-        else if (escolha == 2) {
-            // Buscar Artigo
-        }
-        else if (escolha == 3) {
-            // Atualizar Citações
-        }
-        else if (escolha == 4) {
-            // Gerar Relatório por Ano
-        }
-        else if (escolha == 5) {
-            // Exibir Estatísticas de Citações
-        }
-        else if (escolha == 6) {
-            // Sair (Salvar em binário ".dat" e liberar memória)
-        }
-        else {
-            cout << "Opção inválida. Tente novamente." << endl;
-        }
+   
 
     return 0;
 }

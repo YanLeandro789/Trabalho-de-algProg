@@ -1,0 +1,10 @@
+Relatorio de Artigos (2000 - 2028)
+
+Titulo   : esse
+Autor    : tu
+Ano      : 2020
+DOI      : 123
+Citacoes : 6
+-----------------------------------
+
+Total de artigos no periodo: 1
