@@ -42,6 +42,8 @@ void insertArtigo(Artigo*& head) {
 }
 
 
+
+// procura por recursiva
 Artigo* buscarPorDOI(Artigo* head, int doi) {
     //caso base
     if (head == nullptr)
@@ -188,6 +190,17 @@ void exibirEstatisticas(Artigo* head) {
     cout << "Artigo mais citado: " << maisCtado     << " (" << maxCit << " citacoes)\n";
 }
 
+// struct auxiliar sem o ponteiro next — evita problema de padding
+// ao salvar/carregar. O compilador pode inserir bytes de alinhamento
+// entre char[] e int, então nunca assumimos offset fixo manualmente.
+struct ArtigoData {
+    char titulo[100];
+    char autor[50];
+    int  anoPB;
+    int  DOI;
+    int  citacoes;
+};
+
 //salvar e carregar binario
 void salvarBinario(Artigo* head) {
     ofstream arquivo("acervo.dat", ios::binary);
@@ -199,15 +212,21 @@ void salvarBinario(Artigo* head) {
 
     Artigo* atual = head;
     while (atual != nullptr) {
-        arquivo.write(reinterpret_cast<char*>(atual), sizeof(Artigo) - sizeof(Artigo*));
+        // copia os dados para o struct auxiliar e salva ele inteiro
+        ArtigoData dados;
+        for (int i = 0; i < 100; i++) dados.titulo[i] = atual->titulo[i];
+        for (int i = 0; i < 50;  i++) dados.autor[i]  = atual->autor[i];
+        dados.anoPB    = atual->anoPB;
+        dados.DOI      = atual->DOI;
+        dados.citacoes = atual->citacoes;
+
+        arquivo.write(reinterpret_cast<char*>(&dados), sizeof(ArtigoData));
         atual = atual->next;
     }
 
     arquivo.close();
     cout << "Acervo salvo\n";
 }
-
-
 
 void carregarBinario(Artigo*& head) {
     ifstream arquivo("acervo.dat", ios::binary);
@@ -216,24 +235,21 @@ void carregarBinario(Artigo*& head) {
         return;
     }
 
-    int tamDados = sizeof(Artigo) - sizeof(Artigo*);
-    char buffer[sizeof(Artigo)];
+    ArtigoData dados;
 
-    while (arquivo.read(buffer, tamDados)) {
+    // lê um ArtigoData por vez — sem offset manual, sem risco de padding
+    while (arquivo.read(reinterpret_cast<char*>(&dados), sizeof(ArtigoData))) {
         Artigo* novo = new Artigo();
 
-        for (int i = 0; i < 100; i++) novo->titulo[i] = buffer[i];
-        for (int i = 0; i < 50;  i++) novo->autor[i]  = buffer[100 + i];
-
-        int* campos = reinterpret_cast<int*>(buffer + 150);
-        novo->anoPB    = campos[0];
-        novo->DOI      = campos[1];
-        novo->citacoes = campos[2];
+        for (int i = 0; i < 100; i++) novo->titulo[i] = dados.titulo[i];
+        for (int i = 0; i < 50;  i++) novo->autor[i]  = dados.autor[i];
+        novo->anoPB    = dados.anoPB;
+        novo->DOI      = dados.DOI;
+        novo->citacoes = dados.citacoes;
 
         novo->next = head;
         head = novo;
     }
-    //a
 
     arquivo.close();
     cout << "Acervo carregado com sucesso!\n";
