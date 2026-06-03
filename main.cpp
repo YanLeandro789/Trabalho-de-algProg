@@ -1,3 +1,4 @@
+// Trabalho feito por: (Gabriel da Silva Ferreira, Yan Leandro Rodrigues de Oliveira)
 #include <iostream>
 #include <fstream>
 
@@ -42,7 +43,6 @@ void insertArtigo(Artigo*& head) {
 }
 
 // busca recursiva pelo DOI
-//recursiva, cada chamada avança um nó até achar ou chegar no fim
 //iterativa seria um while(head != nullptr) com head = head->next
 Artigo* buscarPorDOI(Artigo* head, int doi) {
     //caso base
@@ -143,7 +143,6 @@ void gerarRelatorio(Artigo* head) {
 }
 
 // soma recursiva das citações
-// recursiva, soma head->citacoes com o resultado da chamada pro próximo nó
 // iterativa seria um while acumulando num int: while(atual) { total += atual->citacoes; atual = atual->next;
 int totalCitacoesRecursivo(Artigo* head) {
     if (head == nullptr)
