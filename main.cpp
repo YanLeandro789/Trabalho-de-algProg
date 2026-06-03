@@ -44,127 +44,127 @@ void insertArtigo(Artigo*& head) { //funcao para inserir um novo artigo no iníc
 
 
 // procura por recursiva
-Artigo* buscarPorDOI(Artigo* head, int doi) {
+Artigo* buscarPorDOI(Artigo* head, int doi) { // função recursiva para buscar um artigo pelo número DOI
     //caso base
-    if (head == nullptr)
-        return nullptr;
+    if (head == nullptr) // verificamos se chegamos ao final da lista sem encontrar o artigo
+        return nullptr; // se for o caso, retornamos nullptr para indicar que o artigo não foi encontrado
 
-    if (head->DOI == doi)
-        return head;
+    if (head->DOI == doi)// verificamos se o DOI do artigo atual é igual ao DOI que estamos buscando
+        return head;// se for o caso, retornamos um ponteiro para o artigo encontrado
 
-    return buscarPorDOI(head->next, doi);
+    return buscarPorDOI(head->next, doi); // se o DOI do artigo atual não for igual ao DOI que estamos buscando, chamamos a função recursivamente para o próximo artigo na lista
 }
 
 
 
-void menuBuscar(Artigo* head) {
-    int doi;
-    cout << "Buscar Artigo por DOI\n";
-    cout << "Digite o DOI: ";
-    cin >> doi;
+void menuBuscar(Artigo* head) { // função para exibir o menu de busca de artigo por DOI
+    int doi; // variável para armazenar o número DOI que o usuário deseja buscar
+    cout << "Buscar Artigo por DOI\n"; // exibimos o menu para buscar um artigo por DOI
+    cout << "Digite o DOI: "; // solicitamos ao usuário que digite o número DOI do artigo que deseja buscar
+    cin >> doi; //lê o número DOI digitado pelo usuário
 
-    Artigo* encontrado = buscarPorDOI(head, doi);
+    Artigo* encontrado = buscarPorDOI(head, doi); // chamamos a função de busca recursiva para encontrar o artigo com o número DOI digitado pelo usuário e armazenamos o resultado em um ponteiro chamado "encontrado"
 
-    if (encontrado == nullptr) {
-        cout << "Artigo nao encontrado.\n";
+    if (encontrado == nullptr) { // verificamos se o ponteiro "encontrado" é nullptr, o que indica que o artigo não foi encontrado na lista
+        cout << "Artigo nao encontrado.\n"; // imrimimos uma mensagem informando que o artigo não foi encontrado
     } else {
-        cout << "Artigo Encontrado\n";
-        cout << "Titulo   : " << encontrado->titulo   << "\n";
-        cout << "Autor    : " << encontrado->autor    << "\n";
-        cout << "Ano      : " << encontrado->anoPB    << "\n";
-        cout << "DOI      : " << encontrado->DOI      << "\n";
-        cout << "Citacoes : " << encontrado->citacoes << "\n";
+        cout << "Artigo Encontrado\n"; // imprimemos uma mensagem informando que o artigo foi encontrado
+        cout << "Titulo   : " << encontrado->titulo   << "\n"; // imprimimos o título do artigo encontrado
+        cout << "Autor    : " << encontrado->autor    << "\n"; // imprimimos o autor principal do artigo encontrado
+        cout << "Ano      : " << encontrado->anoPB    << "\n"; // imprimimos o ano de publicação do artigo encontrado
+        cout << "DOI      : " << encontrado->DOI      << "\n"; // imprimimos o número DOI do artigo encontrado
+        cout << "Citacoes : " << encontrado->citacoes << "\n"; // imprimimos o número de citações do artigo encontradoz\Z
     }
 }
 
 
 // atualizar citaçoes
 
-void atualizarCitacoes(int& citacoes, int incremento) {
-    citacoes += incremento;
+void atualizarCitacoes(int& citacoes, int incremento) { // função para atualizar o número de citações de um artigo, recebe uma referência para o número de citações e o valor do incremento
+    citacoes += incremento; // atualizamos o número de citações somando o valor do incremento ao número atual de citações
 }
 
 
-void menuAtualizarCitacoes(Artigo* head) {
-    int doi, incremento;
-    cout << "Atualizar Citacoes\n";
-    cout << "Digite o DOI do artigo: ";
-    cin >> doi;
+void menuAtualizarCitacoes(Artigo* head) { // função para exibir o menu de atualização de citações de um artigo
+    int doi, incremento; // variáveis para armazenar o número DOI do artigo que o usuário deseja atualizar e o valor do incremento que o usuário deseja adicionar ao número de citações do artigo
+    cout << "Atualizar Citacoes\n"; // exibimos o menu para atualizar as citações de um artigo
+    cout << "Digite o DOI do artigo: "; // solicitamos ao usuário que digite o número DOI do artigo que deseja atualizar as citações
+    cin >> doi; //lê o número DOI digitado pelo usuário
 
-    Artigo* art = buscarPorDOI(head, doi);
+    Artigo* art = buscarPorDOI(head, doi); // chamamos a função de busca recursiva para encontrar o artigo com o número DOI digitado pelo usuário e armazenamos o resultado em um ponteiro chamado "art"
 
-    if (art == nullptr) {
-        cout << "Artigo nao encontrado.\n";
-        return;
+    if (art == nullptr) { // verificamos se o ponteiro "art" é nullptr, o que indica que o artigo não foi encontrado na lista
+        cout << "Artigo nao encontrado.\n"; // se for o caso, imprimimos uma mensagem informando que o artigo não foi encontrado e retornamos para o menu principal
+        return; // se o artigo for encontrado, continuamos com a atualização das citações
     }
 
-    cout << "Citacoes atuais: " << art->citacoes << "\n";
-    cout << "Quantas citacoes deseja adicionar? ";
-    cin >> incremento;
+    cout << "Citacoes atuais: " << art->citacoes << "\n";// imprimimos o número atual de citações do artigo encontrado
+    cout << "Quantas citacoes deseja adicionar? "; // solicitamos ao usuário que digite o valor do incremento que deseja adicionar ao número de citações do artigo
+    cin >> incremento; //lê o valor do incremento digitado pelo usuário
 
-    atualizarCitacoes(art->citacoes, incremento);  
+    atualizarCitacoes(art->citacoes, incremento);  // chamamos a função para atualizar o número de citações do artigo, passando a referência para o número de citações do artigo encontrado e o valor do incremento digitado pelo usuário
 
-    cout << "Citacoes atualizadas para: " << art->citacoes << "\n";
+    cout << "Citacoes atualizadas para: " << art->citacoes << "\n"; // imprimimos o número atualizado de citações do artigo encontrado para confirmar que a atualização foi realizada com sucesso
 }
 
 //gerar relatorio por ano
-void gerarRelatorio(Artigo* head) {
-    int anoInicio, anoFim;
-    cout << "Gerar Relatorio por Ano";
-    cout << "Ano inicial: ";
-    cin >> anoInicio;
-    cout << "Ano final  : ";
-    cin >> anoFim;
+void gerarRelatorio(Artigo* head) { // função para gerar um relatório de artigos publicados em um determinado período de anos
+    int anoInicio, anoFim; // variáveis para armazenar o ano inicial e o ano final do período que o usuário deseja gerar o relatório
+    cout << "Gerar Relatorio por Ano"; // exibimos o menu para gerar um relatório de artigos por ano
+    cout << "Ano inicial: "; // solicitamos ao usuário que digite o ano inicial do período para o qual deseja gerar o relatório
+    cin >> anoInicio; //lê o ano inicial digitado pelo usuário
+    cout << "Ano final  : ";// solicitamos ao usuário que digite o ano final do período para o qual deseja gerar o relatório
+    cin >> anoFim; //lê o ano final digitado pelo usuário
 
-    ofstream arquivo("relatorio.txt");
+    ofstream arquivo("relatorio.txt"); // criamos um objeto ofstream para abrir o arquivo "relatorio.txt" para escrita
 
-    if (!arquivo.is_open()) {
-        cout << "Erro ao abrir o arquivo de relatorio!\n";
-        return;
+    if (!arquivo.is_open()) { // verificamos se o arquivo foi aberto com sucesso
+        cout << "Erro ao abrir o arquivo de relatorio!\n"; // se não for o caso, imprimimos uma mensagem de erro e retornamos para o menu principal
+        return;// se o arquivo foi aberto com sucesso, continuamos com a geração do relatório
     }
 
-    arquivo << "Relatorio de Artigos (" << anoInicio << " - " << anoFim << ")\n\n";
+    arquivo << "Relatorio de Artigos (" << anoInicio << " - " << anoFim << ")\n\n"; // escrevemos o título do relatório no arquivo, indicando o período de anos para o qual o relatório foi gerado
 
-    Artigo* atual = head;
-    int count = 0;
+    Artigo* atual = head; // criamos um ponteiro "atual" para percorrer a lista de artigos, começando pelo head da lista
+    int count = 0; // variável para contar o número de artigos que se encaixam no período de anos especificado pelo usuário
 
-    while (atual != nullptr) {
-        if (atual->anoPB >= anoInicio && atual->anoPB <= anoFim) {
-            arquivo << "Titulo   : " << atual->titulo   << "\n";
-            arquivo << "Autor    : " << atual->autor    << "\n";
-            arquivo << "Ano      : " << atual->anoPB    << "\n";
-            arquivo << "DOI      : " << atual->DOI      << "\n";
-            arquivo << "Citacoes : " << atual->citacoes << "\n";
-            arquivo << "-----------------------------------\n";
-            count++;
+    while (atual != nullptr) { // percorremos a lista de artigos enquanto o ponteiro "atual" não for nullptr, o que indica que chegamos ao final da lista
+        if (atual->anoPB >= anoInicio && atual->anoPB <= anoFim) { // verificamos se o ano de publicação do artigo atual está dentro do período de anos especificado pelo usuário
+            arquivo << "Titulo   : " << atual->titulo   << "\n"; // se for o caso, escrevemos os dados do artigo no arquivo de relatório
+            arquivo << "Autor    : " << atual->autor    << "\n"; // escrevemos o autor principal do artigo no arquivo de relatório
+            arquivo << "Ano      : " << atual->anoPB    << "\n"; // escrevemos o ano de publicação do artigo no arquivo de relatório
+            arquivo << "DOI      : " << atual->DOI      << "\n"; // escrevemos o número DOI do artigo no arquivo de relatório
+            arquivo << "Citacoes : " << atual->citacoes << "\n"; // escrevemos o número de citações do artigo no arquivo de relatório
+            arquivo << "-----------------------------------\n";// escrevemos uma linha de separação entre os artigos no arquivo de relatório
+            count++; // incrementamos o contador de artigos que se encaixam no período de anos especificado pelo usuário
         }
-        atual = atual->next;
+        atual = atual->next; // movemos o ponteiro "atual" para o próximo artigo na lista para continuar a verificação dos artigos seguintes
     }
 
-    arquivo << "\nTotal de artigos no periodo: " << count << "\n";
-    arquivo.close();
+    arquivo << "\nTotal de artigos no periodo: " << count << "\n"; // escrevemos o total de artigos que se encaixam no período de anos especificado pelo usuário no final do arquivo de relatório
+    arquivo.close(); // fechamos o arquivo de relatório para garantir que os dados sejam salvos corretamente
 
-    cout << "Relatorio gerado em 'relatorio.txt' com " << count << " artigos.\n";
+    cout << "Relatorio gerado em 'relatorio.txt' com " << count << " artigos.\n"; // imprimimos uma mensagem informando que o relatório foi gerado com sucesso e indicando o número de artigos que foram incluídos no relatório
 }
 
 
 // exibir Recursivo
-int totalCitacoesRecursivo(Artigo* head) {
+int totalCitacoesRecursivo(Artigo* head) {//fucao recursiva para calcular o total de citações de todos os artigos na lista, recebe um ponteiro para o head da lista de artigos
     // caso base
-    if (head == nullptr)
-        return 0;
+    if (head == nullptr)// verificamos se chegamos ao final da lista, o que indica que não há mais artigos para contar as citações
+        return 0;// se for o caso, retornamos 0 para indicar que não há mais citações a contar
 
-    return head->citacoes + totalCitacoesRecursivo(head->next);
+    return head->citacoes + totalCitacoesRecursivo(head->next);// se o artigo atual não for nullptr, somamos o número de citações do artigo atual com o resultado da chamada recursiva para o próximo artigo na lista, o que nos permite contar as citações de todos os artigos na lista de forma recursiva
 }
 
 
 
-void exibirEstatisticas(Artigo* head) {
-    cout << "Estatisticas de Citacoes\n";
+void exibirEstatisticas(Artigo* head) { //funcao para exibir as estatísticas de citações dos artigos na lista, recebe um ponteiro para o head da lista de artigos
+    cout << "Estatisticas de Citacoes\n"; // imprime o menu para exibir as estatísticas de citações dos artigos na lista
 
-    if (head == nullptr) {
-        cout << "Acervo vazio.\n";
-        return;
+    if (head == nullptr) { // verificamos se o head da lista é nullptr, o que indica que a lista de artigos está vazia
+        cout << "Acervo vazio.\n"; // se for o caso, imprimimos uma mensagem informando que o acervo está vazio e retornamos para o menu principal
+        return; // se a lista de artigos não estiver vazia, continuamos com o cálculo e exibição das estatísticas de citações
     }
 
     int total = totalCitacoesRecursivo(head);
