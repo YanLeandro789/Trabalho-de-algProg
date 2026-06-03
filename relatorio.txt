@@ -1,5 +1,17 @@
-Relatorio de Artigos (2026 - 2029)
+Relatorio de Artigos (2000 - 3000)
 
+Titulo   : vantagens de ser invisivel
+Autor    : gabriel
+Ano      : 2006
+DOI      : 1213
+Citacoes : 6
+-----------------------------------
+Titulo   : capa free fire
+Autor    : ronaldo
+Ano      : 2002
+DOI      : 12
+Citacoes : 7
+-----------------------------------
 Titulo   : Top 10 hentai
 Autor    : Yam Leandro
 Ano      : 2026
@@ -7,4 +19,4 @@ DOI      : 6769
 Citacoes : 6857
 -----------------------------------
 
-Total de artigos no periodo: 1
+Total de artigos no periodo: 3

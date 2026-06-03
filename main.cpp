@@ -3,42 +3,42 @@
 
 using namespace std;
 
-struct Artigo {
-    char titulo[100];
-    char autor[50];
-    int  anoPB;
-    int  DOI;
-    int  citacoes;
-    Artigo* next;
+struct Artigo { // criamos a struct Artigo para armazenar os dados de cada artigo e o ponteiro para o próximo
+    char titulo[100]; // titulo do artigo
+    char autor[50];   // autor principal do artigo
+    int  anoPB;       // ano de publicação do artigo
+    int  DOI;         // número DOI do artigo
+    int  citacoes;    // número de citacoes do artigo
+    Artigo* next;     // ponteiro para o próximo artigo na lista
 };
 
 // Novo artigo
-void insertArtigo(Artigo*& head) {
-    Artigo* novo = new Artigo();
+void insertArtigo(Artigo*& head) { //funcao para inserir um novo artigo no início da lista 
+    Artigo* novo = new Artigo(); //criamos um novo artigo alocando dinamicamente
 
-    cout << "Inserir Novo Artigo\n";
+    cout << "Inserir Novo Artigo\n"; //exibimos o menu para inserir um novo artigo
 
-    cout << "Titulo: ";
-    cin.ignore();
-    cin.getline(novo->titulo, 100);
+    cout << "Titulo: "; // solicitamos o título do artigo
+    cin.ignore(); //limpamos o buffer do teclado para evitar problemas com getline após cin
+    cin.getline(novo->titulo, 100); //lê o título do artigo usando getline para permitir espaços
 
-    cout << "Autor principal: ";
-    cin.getline(novo->autor, 50);
+    cout << "Autor principal: "; // solicitamos o autor principal do artigo
+    cin.getline(novo->autor, 50); //lê o nome do autor usando getline para permitir espaços
 
-    cout << "Ano de publicacao: ";
-    cin >> novo->anoPB;
+    cout << "Ano de publicacao: "; // solicitamos o ano de publicação do artigo
+    cin >> novo->anoPB; //lê o ano de publicação do artigo
 
-    cout << "DOI (numero inteiro): ";
-    cin >> novo->DOI;
+    cout << "DOI (numero inteiro): "; // solicitamos o número DOI do artigo
+    cin >> novo->DOI; //lê o número DOI do artigo
 
-    cout << "Numero de citacoes: ";
-    cin >> novo->citacoes;
+    cout << "Numero de citacoes: "; // solicitamos o número de citações do artigo
+    cin >> novo->citacoes; //lê o número de citações do artigo
 
     // insere na frente da lista
-    novo->next = head;
-    head = novo;
+    novo->next = head; // o próximo do novo artigo aponta para o atual head da lista
+    head = novo; // o head da lista agora é o novo artigo
 
-    cout << "Artigo inserido com sucesso!\n";
+    cout << "Artigo inserido com sucesso!\n"; // confirmamos que o artigo foi inserido com sucesso
 }
 
 
